@@ -1,0 +1,71 @@
+
+/* Vereinfachung für Skalierung der Elemente */
+* {
+    box-sizing: border-box;
+}
+
+/* Sonst würde sich der Farbverlauf in immer wiederkehrenden Blöcken wiederholen */
+html {
+    min-height: 100vh;
+}
+
+/* Farbverlauf von "hesso-blau" zu weiss (margin = 0, dass es über die ganze Seite geht) */
+body {
+    margin: 0;
+    background: radial-gradient(#FFFFFF, #0078B4);
+}
+
+/* Style für Titel */
+.page-title{
+    color: white;
+    font-family: "Gill Sans MT", Serif;
+    text-align: center;
+    font-size: 3em;
+}
+
+/* Anordnung von Timer & Anzahl Flips in einer Reihe */
+.game-info-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Style für Timer und Anzahl Flips */
+.game-info {
+    color: white;
+    font-family: "Gill Sans MT", Serif;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+/* Layout für Karten */
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    margin: 50px;
+    justify-content: center;
+}
+
+/* Style für Karte */
+.card {
+    position: relative;
+    background-color: white;
+    border-style: double;
+    border-color: #0078B4;
+    border-width: 7px;
+    height: 175px;
+    width: 125px;
+}
+
+/* Hesso Logo */
+.card-face {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
