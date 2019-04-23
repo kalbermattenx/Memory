@@ -1,4 +1,3 @@
-
 /* Vereinfachung für Skalierung der Elemente */
 * {
     box-sizing: border-box;
@@ -16,7 +15,7 @@ body {
 }
 
 /* Style für Titel */
-.page-title{
+.page-title {
     color: white;
     font-family: "Gill Sans MT", Serif;
     text-align: center;
@@ -40,11 +39,12 @@ body {
 
 /* Layout für Karten */
 .game-container {
+    margin: 50px auto;
     display: grid;
     grid-template-columns: repeat(4, auto);
     grid-gap: 10px;
-    margin: 50px;
     justify-content: center;
+    perspective: 500px;
 }
 
 /* Style für Karte */
@@ -55,17 +55,116 @@ body {
     border-color: #0078B4;
     border-width: 7px;
     height: 175px;
-    width: 125px;
+    width: 140px;
 }
 
 /* Hesso Logo */
 .card-face {
     position: absolute;
-    width: 80%;
+    width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    backface-visibility: hidden;
+    transition: transform 500ms ease-in-out;
 }
 
+.card.visible .card-back {
+    transform: rotateY(-180deg);
+}
 
+.card.visible .card-front {
+    transform: rotateY(0);
+}
+
+.card.matched .card-front .card-value {
+    animation: dance 1s linear infinite 500ms;
+}
+
+.card-back {
+    transform: rotateY(0);
+}
+
+.hesso {
+    align-self: center;
+    transition: transform 100ms ease-in-out;
+    transform: translateY(-10px);
+}
+
+.card-back:hover .hesso {
+    transform: translateY(0);
+}
+
+.card-value {
+    position: relative;
+    transition: transform 100ms ease-in-out;
+    transform: scale(.9);
+}
+
+.card-front:hover .card-value {
+    transform: scale(1);
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}
+
+.overlay-text {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FF6D00;
+    font-family: Creepy, serif;
+    transition: background-color 500ms, font-size 500ms;
+}
+
+.overlay-text-small {
+    font-size: .3em;
+}
+
+.overlay-text.visible {
+    display: flex;
+    animation: overlay-grow 500ms forwards;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    25% {
+        transform: rotate(-30deg)
+    }
+    75% {
+        transform: rotate(30deg)
+    }
+}
+
+@keyframes overlay-grow {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+    }
+    to {
+        background-color: rgba(0, 0, 0, .8);
+        font-size: 10em;
+    }
+}
+
+@media (max-width: 600px) {
+    .game-container {
+        grid-template-columns: repeat(2, auto)
+    }
+
+    .game-info-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
