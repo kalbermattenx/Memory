@@ -3,7 +3,7 @@
     box-sizing: border-box;
 }
 
-/* Sonst würde sich der Farbverlauf in immer wiederkehrenden Blöcken wiederholen */
+/* Vermeidung der Wiederholung des Farbverlaufs in immer wiederkehrenden Blöcken */
 html {
     min-height: 100vh;
 }
@@ -37,7 +37,7 @@ body {
     font-size: 2em;
 }
 
-/* Layout für Karten */
+/* Layout für Bereich der Karten */
 .game-container {
     margin: 50px auto;
     display: grid;
@@ -47,7 +47,7 @@ body {
     perspective: 500px;
 }
 
-/* Style für Karte */
+/* Style für Karte Allgemein */
 .card {
     position: relative;
     background-color: white;
@@ -58,7 +58,6 @@ body {
     width: 140px;
 }
 
-/* Hesso Logo */
 .card-face {
     position: absolute;
     width: 100%;
@@ -70,46 +69,52 @@ body {
     transition: transform 500ms ease-in-out;
 }
 
-.card.visible .card-back {
-    transform: rotateY(-180deg);
+/* Karte Vorderseite */
+.card-front {
+    transform: rotateY(180deg);
 }
 
 .card.visible .card-front {
     transform: rotateY(0);
 }
 
-.card.matched .card-front .card-value {
-    animation: dance 1s linear infinite 500ms;
+.card-front:hover .card-value {
+    transform: scale(1);
 }
 
-.card-back {
-    transform: rotateY(0);
-}
-
-.hesso {
-    align-self: center;
-    transition: transform 100ms ease-in-out;
-    transform: translateY(-10px);
-}
-
-.card-back:hover .hesso {
-    transform: translateY(0);
-}
-
+/* Position und Animation Icon (Vorderseite) */
 .card-value {
     position: relative;
     transition: transform 100ms ease-in-out;
     transform: scale(.9);
 }
 
-.card-front:hover .card-value {
-    transform: scale(1);
+/* Karte Rückseite */
+.card-back {
+    transform: rotateY(0);
 }
 
-.card-front {
-    transform: rotateY(180deg);
+.card.visible .card-back {
+    transform: rotateY(-180deg);
 }
 
+.card-back:hover .hesso {
+    transform: translateY(0);
+}
+
+/* Position und Animation Icon (Rückseite)) */
+.hesso {
+    align-self: center;
+    transition: transform 100ms ease-in-out;
+    transform: translateY(-10px);
+}
+
+/* Treffer */
+.card.matched .card-front .card-value {
+    animation: dance 1s linear infinite 500ms;
+}
+
+/* Layout & Style für Titel der Zwischenfenster (Start, Sieg und Niederlage) */
 .overlay-text {
     top: 0;
     left: 0;
@@ -121,8 +126,8 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #FF6D00;
-    font-family: Creepy, serif;
+    color: #FFFFFF;
+    font-family: Gill Sans MT, serif;
     transition: background-color 500ms, font-size 500ms;
 }
 
@@ -135,6 +140,7 @@ body {
     animation: overlay-grow 500ms forwards;
 }
 
+/* Animation Treffer */
 @keyframes dance {
     0%, 100% {
         transform: rotate(0)
@@ -147,6 +153,7 @@ body {
     }
 }
 
+/* Animation Startfenster */
 @keyframes overlay-grow {
     from {
         background-color: rgba(0, 0, 0, 0);
@@ -158,6 +165,7 @@ body {
     }
 }
 
+/* Responsive -> falls Fenster kleiner als 600px nur noch zwei Kolonnen & Gameinfo übereinander */
 @media (max-width: 600px) {
     .game-container {
         grid-template-columns: repeat(2, auto)

@@ -6,12 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="styles.css" rel="stylesheet">
     <script src="script.js" async></script>
-    <title>Mix-Or-Match</title>
+    <title>HES-SO MEMORY</title>
 </head>
 <body>
+<!-- Haupttitel -->
 <h1 class="page-title">HES-SO MEMORY</h1>
-
-
+<!-- Start -->
+<div class="overlay-text visible">
+    Trick zum Startu
+</div>
+<!-- Sieg -->
+<div id="game-over-text" class="overlay-text">
+    GIGWUNNU!
+    <span class="overlay-text-small">Numal?</span>
+</div>
+<!-- Niederlage -->
+<div id="victory-text" class="overlay-text">
+    VERLORU!
+    <span class="overlay-text-small">Numal?</span>
+</div>
+<!-- Game-Container -->
 <div class="game-container">
     <div class="game-info-container">
         <div class="game-info">
@@ -21,6 +35,7 @@
             Flips <span id="flips">0</span>
         </div>
     </div>
+    <!-- Karten -->
     <div class="card">
         <div class="card-back card-face">
             <img class="hesso" src="Bilder/hesso_logo.png">
@@ -149,6 +164,8 @@
             <img class="card-value" src="Bilder/solange.png">
         </div>
     </div>
+    <!-- Karten ENDE -->
 </div>
+<!-- Game-Container ENDE -->
 </body>
 </html>
