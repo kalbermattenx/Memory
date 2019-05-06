@@ -3,11 +3,9 @@ class AudioController {
     constructor() {
 
         // Hintergrundmusik
-        /*
-        this.bgMusic = new Audio('hintergundmusik.mp3');
-        this.bgMusic.volume = 0.5;
-        this bgMusic.loop = true;
-        */
+        this.bgMusic = new Audio('Sounds/hintergrundmusik.mp3');
+        this.bgMusic.volume = 0.2;
+        this.bgMusic.loop = true;
 
         // Sounds zu einzelnen Aktionen (Flip, Match, Sieg und Niederlage)
         this.flipSound = new Audio('Sounds/flip.wav');
@@ -65,8 +63,20 @@ class MixOrMatch {
         this.matchedCard = [];
         this.busy = true; // blockiert andere Aktionen (Bsp.: eine Animation soll zuerst fertig laufen)
 
+        setTimeout(() =>{
+            this.audiocontroller.startMusic();
+            this.shuffleCards();
+            this.countdown = this.startCountdown();
+            this.busy = false;
+        }, 500);
+        this.hideCards();
+        this.ticker.innerText = this.timeRemaining;
+        this.ticker.innerText = this.totalClicks;
     }
 
+    // 34.48 YT
+
+    // Karten umdrehen
     flipCard(card){
         if(this.canFlipCard(card)){
             this.audiocontroller.flip();
@@ -78,13 +88,16 @@ class MixOrMatch {
         }
     }
 
-    // Name des Shuffles (auch für die Präsi)
+    // Fisher-Yates-Shuffle (in Präsi erklären -> 27.30)
     shuffleCards(){
-       for() {
-
+       for(let i = this.cardsArray.length - 1; i > 0; i--) {
+           let randIndex = Math.floor(Math.random() * (i+1));
+           this.cardsArray[randIndex].style.order = i;
+           this.cardsArray[i].style.order = randIndex;
        }
     }
 
+    // Überprüfung
     canFlipCard(card){
         return true;
         //return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
