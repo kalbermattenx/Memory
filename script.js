@@ -78,14 +78,12 @@ class MixOrMatch {
         }
     }
 
-    /*
     // Name des Shuffles (auch für die Präsi)
     shuffleCards(){
        for() {
 
        }
     }
-*/
 
     canFlipCard(card){
         return true;
