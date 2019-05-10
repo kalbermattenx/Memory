@@ -56,6 +56,7 @@ class MixOrMatch {
         this.audiocontroller = new AudioController();
     }
 
+    // Spiel starten
     startGame(){
         this.cardToCheck = null;
         this.totalClicks = 0;
@@ -66,7 +67,7 @@ class MixOrMatch {
         setTimeout(() =>{
             this.audiocontroller.startMusic();
             this.shuffleCards();
-            this.countdown = this.startCountdown();
+            this.countDown = this.startCountDown();
             this.busy = false;
         }, 500);
         this.hideCards();
@@ -74,7 +75,13 @@ class MixOrMatch {
         this.ticker.innerText = this.totalClicks;
     }
 
-    // 34.48 YT
+    // Karten "verstecken"
+    hideCard(){
+        this.cardsArray.forEach(card => {
+            card.classList.remove('visible');
+            card.classList.remove('matched');
+        });
+    }
 
     // Karten umdrehen
     flipCard(card){
@@ -84,8 +91,74 @@ class MixOrMatch {
             this.ticker.innerText = this.totalClicks;
             card.classList.add('visible');
 
-            // if statement
+            if(this.cardToCheck) // wenn cardToCheck null ist, geht es in die else-Anweisung
+                this.checkForCardMatch(card)
+            else
+                this.cardToCheck = card;
         }
+    }
+
+    // Auf Match überprüfen
+    checkForCardMatch(card) {
+        if(this.getCardType(card) === this.getCardType(this.cardToCheck))
+            this.cardMatch(card, this.cardToCheck);
+        else
+            this.cardMisMatch(card, this.cardToCheck);
+
+        this.cardToCheck = null;
+    }
+
+    // Karten stimmen überein
+    cardMatch(card1, card2) {
+        this.matchedCard.push(card1);
+        this.matchedCard.push(card2);
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        this.audiocontroller.match();
+        if(this.matchedCard.length === this.cardsArray.length)
+            this.victory();
+    }
+
+    // Karten stimmen nicht überein
+    cardMisMatch(card1, card2) {
+        this.busy = true;
+        setTimeout(() => {
+            card1.classList.remove('visible');
+            card2.classList.remove('visible');
+            this.busy = false;
+        }, 1000)
+    }
+
+
+    // Kartentyp herausfinden
+    getCardType(card) {
+        return  card.getElementsByClassName('card-value')[0].src;
+    }
+
+    // Timer (setInterval funktioniert ähnlich wie setTimeout => ruft/führt alle x MS etwas auf/aus)
+    startCountDown(){
+        return setInterval(() => {
+            this.timeRemaining--;
+            this.timer.innerText = this.timeRemaining;
+            if(this.timeRemaining === 0) // wenn Timer bei 0, dann GameOver
+                this.gameOver();
+        }, 1000)
+    }
+
+    // Niederlage
+    gameOver(){
+        clearInterval(this.countDown);
+        this.audiocontroller.gameover();
+        document.getElementById('game-over-text').classList.add('visible');
+        this.hideCard();
+    }
+
+    // Sieg
+    victory(){
+        clearInterval(this.countDown);
+        this.audiocontroller.victory();
+        document.getElementById('victory-text').classList.add('visible');
+        this.hideCard();
     }
 
     // Fisher-Yates-Shuffle (in Präsi erklären -> 27.30)
@@ -99,8 +172,7 @@ class MixOrMatch {
 
     // Überprüfung
     canFlipCard(card){
-        return true;
-        //return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
+        return !this.busy && !this.matchedCard.includes(card) && card !== this.cardToCheck;
     }
 }
 
