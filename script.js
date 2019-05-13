@@ -161,7 +161,7 @@ class MixOrMatch {
         this.hideCard();
     }
 
-    // Fisher-Yates-Shuffle (in Präsi erklären -> 27.30)
+    // Fisher-Yates-Shuffle
     shuffleCards(){
        for(let i = this.cardsArray.length - 1; i > 0; i--) {
            let randIndex = Math.floor(Math.random() * (i+1));
